@@ -205,7 +205,20 @@ class Task5View(View):
     """
 
     def get(self, request, **kwargs):
-        recipe_products = list()
+
+        recipe_products = list(
+            RecipeProduct.objects.filter(
+                recipe_id=3
+            ).annotate(
+                number_of=(F('count') * 5),
+            ).values_list(
+                'recipe__title',
+                'recipe__description',
+                'product__title',
+                'number_of',
+                'unit__abbreviation',
+            )
+        )
 
         # Если есть необходимость посмотреть на выполняемые запросы, план запросов через браузер, то нужно
         # раскомментировать строки ниже
