@@ -9,9 +9,11 @@ from django.shortcuts import (
 from django.views import (
     View,
 )
-from django.db.models import Count, F
+from django.db.models import Count, F, Value
 
 from recipes.models import Recipe, CookStep, RecipeProduct
+from users.models import CustomUser
+
 
 class Task1View(View):
     """
@@ -103,6 +105,7 @@ class Task3View(View):
     """
 
     def get(self, request, **kwargs):
+
         recipes = list(
             Recipe.objects.annotate(
                 likes=Count('vote', filter=F('vote__is_like'))
@@ -144,9 +147,32 @@ class Task4View(View):
     """
 
     def get(self, request, **kwargs):
-        authors = list()
 
-        voters = list()
+        authors = list(
+            CustomUser.objects.filter(
+                author__isnull=False
+            ).annotate(
+                status=Value('Автор'),
+                number_of_recipes=Count('userrecipe'),
+            ).values_list(
+                'status',
+                'email',
+                'number_of_recipes'
+            ).order_by('-number_of_recipes')[:3]
+        )
+
+        voters = list(
+            CustomUser.objects.filter(
+                author__isnull=True
+            ).annotate(
+                status=Value('Пользователь'),
+                number_of_likes=Count('vote')
+            ).values_list(
+                'status',
+                'email',
+                'number_of_likes'
+            ).order_by('-number_of_likes')[:3]
+        )
 
         data = {
             'authors': authors,

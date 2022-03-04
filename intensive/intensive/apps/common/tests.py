@@ -65,21 +65,21 @@ class CommonTest(TestCase):
 
     #     self.assertEqual(ordered(trust_result), ordered(response_result))
 
-    def test_task_3(self):
-        """
-        Тест третьего задания
-        """
-        response = self.client.get('/task-3/')
+    # def test_task_3(self):
+    #     """
+    #     Тест третьего задания
+    #     """
+    #     response = self.client.get('/task-3/')
 
-        trust_result = json.loads(
-            '{"recipes": [["user4@pee.rocks", "Рецепт 3", "Описание рецепта 3", 2], ["user4@pee.rocks", "Рецепт 1", '
-            '"Описание рецепта 1", 2], ["user4@pee.rocks", "Рецепт 2", "Описание рецепта 2", 1], ["user5@pee.rocks", '
-            '"Рецепт 5", "Описание рецепта 5", 1], ["user5@pee.rocks", "Рецепт 4", "Описание рецепта 4", 1]]}'
-        )
+    #     trust_result = json.loads(
+    #         '{"recipes": [["user4@pee.rocks", "Рецепт 3", "Описание рецепта 3", 2], ["user4@pee.rocks", "Рецепт 1", '
+    #         '"Описание рецепта 1", 2], ["user4@pee.rocks", "Рецепт 2", "Описание рецепта 2", 1], ["user5@pee.rocks", '
+    #         '"Рецепт 5", "Описание рецепта 5", 1], ["user5@pee.rocks", "Рецепт 4", "Описание рецепта 4", 1]]}'
+    #     )
 
-        response_result = json.loads(response.content)
+    #     response_result = json.loads(response.content)
 
-        self.assertEqual(ordered(trust_result), ordered(response_result))
+    #     self.assertEqual(ordered(trust_result), ordered(response_result))
 
     # def test_task_4(self):
     #     """
@@ -97,22 +97,22 @@ class CommonTest(TestCase):
 
     #     self.assertEqual(ordered(trust_result), ordered(response_result))
 
-    # def test_task_5(self):
-    #     """
-    #     Тест пятого задания
-    #     """
-    #     response = self.client.get('/task-5/')
+    def test_task_5(self):
+        """
+        Тест пятого задания
+        """
+        response = self.client.get('/task-5/')
 
-    #     trust_result = json.loads(
-    #         '{"recipe_products": [["Рецепт 3", "Описание рецепта 3", "Масло растительное", "15.00", "л"], ["Рецепт 3", '
-    #         '"Описание рецепта 3", "Молоко", "25.00", "л"], ["Рецепт 3", "Описание рецепта 3", "Картофель", "5000.00", '
-    #         '"г"], ["Рецепт 3", "Описание рецепта 3", "Мясо говяжье", "5000.00", "г"], ["Рецепт 3", '
-    #         '"Описание рецепта 3", "Сахар", "60.00", "г"], ["Рецепт 3", "Описание рецепта 3", "Соль", "110.00", "г"]]}'
-    #     )
+        trust_result = json.loads(
+            '{"recipe_products": [["Рецепт 3", "Описание рецепта 3", "Масло растительное", "15.00", "л"], ["Рецепт 3", '
+            '"Описание рецепта 3", "Молоко", "25.00", "л"], ["Рецепт 3", "Описание рецепта 3", "Картофель", "5000.00", '
+            '"г"], ["Рецепт 3", "Описание рецепта 3", "Мясо говяжье", "5000.00", "г"], ["Рецепт 3", '
+            '"Описание рецепта 3", "Сахар", "60.00", "г"], ["Рецепт 3", "Описание рецепта 3", "Соль", "110.00", "г"]]}'
+        )
 
-    #     response_result = json.loads(response.content)
+        response_result = json.loads(response.content)
 
-    #     self.assertEqual(ordered(trust_result), ordered(response_result))
+        self.assertEqual(ordered(trust_result), ordered(response_result))
 
 
 
