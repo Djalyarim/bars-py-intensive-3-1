@@ -22,7 +22,10 @@ class Task1View(View):
 
     def get(self, request, **kwargs):
         recipes = list(
-            Recipe.objects.values_list('userrecipe__user', 'title', 'description')
+            Recipe.objects.values_list(
+                'userrecipe__user',
+                'title',
+                'description')
         )
 
         # Если есть необходимость посмотреть на выполняемые запросы, план запросов через браузер, то нужно
@@ -51,13 +54,20 @@ class Task2View(View):
 
     def get(self, request, **kwargs):
         recipe = Recipe.objects.get(id=1)
+
         steps = list(
-            CookStep.objects.values_list('title', 'description'
-            ).filter(recipe=recipe)
+            CookStep.objects.values_list(
+                'title', 'description'
+            ).filter(
+                recipe=recipe)
         )
+
         products = list(
             RecipeProduct.objects.values_list(
-                'product__title', 'product__description', 'count', 'unit__abbreviation'
+                'product__title',
+                'product__description',
+                'count',
+                'unit__abbreviation'
             ).filter(recipe=recipe)
         )
 
