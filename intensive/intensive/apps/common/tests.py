@@ -47,39 +47,39 @@ class CommonTest(TestCase):
 
     #     self.assertEqual(ordered(trust_result), ordered(response_result))
 
-    def test_task_2(self):
-        """
-        Тест второго задания
-        """
-        response = self.client.get('/task-2/')
-
-        trust_result = json.loads(
-            '{"recipe_data": {"steps": [["Рецепт 1 Шаг 1", "Описание Рецепта 1 Шаг 1"], ["Рецепт 1 Шаг 3", '
-            '"Описание Рецепта 1 Шаг 3"], ["Рецепт 1 Шаг 2", "Описание Рецепта 1 Шаг 2"]], '
-            '"products": [["Минеральная вода", "Минеральная вода", "1.00", "л"], ["Масло растительное", '
-            '"Масло растительное рафинированное", "1.00", "л"], ["Молоко", "Молоко 3.2%", "2.00", "л"], '
-            '["Мясо говяжье", "Мясо говяжье", "3.00", "г"], ["Сахар", "Сахар", "1.00", "г"]]}}'
-        )
-
-        response_result = json.loads(response.content)
-
-        self.assertEqual(ordered(trust_result), ordered(response_result))
-
-    # def test_task_3(self):
+    # def test_task_2(self):
     #     """
-    #     Тест третьего задания
+    #     Тест второго задания
     #     """
-    #     response = self.client.get('/task-3/')
+    #     response = self.client.get('/task-2/')
 
     #     trust_result = json.loads(
-    #         '{"recipes": [["user4@pee.rocks", "Рецепт 3", "Описание рецепта 3", 2], ["user4@pee.rocks", "Рецепт 1", '
-    #         '"Описание рецепта 1", 2], ["user4@pee.rocks", "Рецепт 2", "Описание рецепта 2", 1], ["user5@pee.rocks", '
-    #         '"Рецепт 5", "Описание рецепта 5", 1], ["user5@pee.rocks", "Рецепт 4", "Описание рецепта 4", 1]]}'
+    #         '{"recipe_data": {"steps": [["Рецепт 1 Шаг 1", "Описание Рецепта 1 Шаг 1"], ["Рецепт 1 Шаг 3", '
+    #         '"Описание Рецепта 1 Шаг 3"], ["Рецепт 1 Шаг 2", "Описание Рецепта 1 Шаг 2"]], '
+    #         '"products": [["Минеральная вода", "Минеральная вода", "1.00", "л"], ["Масло растительное", '
+    #         '"Масло растительное рафинированное", "1.00", "л"], ["Молоко", "Молоко 3.2%", "2.00", "л"], '
+    #         '["Мясо говяжье", "Мясо говяжье", "3.00", "г"], ["Сахар", "Сахар", "1.00", "г"]]}}'
     #     )
 
     #     response_result = json.loads(response.content)
 
     #     self.assertEqual(ordered(trust_result), ordered(response_result))
+
+    def test_task_3(self):
+        """
+        Тест третьего задания
+        """
+        response = self.client.get('/task-3/')
+
+        trust_result = json.loads(
+            '{"recipes": [["user4@pee.rocks", "Рецепт 3", "Описание рецепта 3", 2], ["user4@pee.rocks", "Рецепт 1", '
+            '"Описание рецепта 1", 2], ["user4@pee.rocks", "Рецепт 2", "Описание рецепта 2", 1], ["user5@pee.rocks", '
+            '"Рецепт 5", "Описание рецепта 5", 1], ["user5@pee.rocks", "Рецепт 4", "Описание рецепта 4", 1]]}'
+        )
+
+        response_result = json.loads(response.content)
+
+        self.assertEqual(ordered(trust_result), ordered(response_result))
 
     # def test_task_4(self):
     #     """

@@ -9,8 +9,9 @@ from django.shortcuts import (
 from django.views import (
     View,
 )
+from django.db.models import Count, F
+
 from recipes.models import Recipe, CookStep, RecipeProduct
- 
 
 class Task1View(View):
     """
@@ -21,6 +22,7 @@ class Task1View(View):
     """
 
     def get(self, request, **kwargs):
+
         recipes = list(
             Recipe.objects.values_list(
                 'userrecipe__user',
@@ -53,6 +55,7 @@ class Task2View(View):
     """
 
     def get(self, request, **kwargs):
+
         recipe = Recipe.objects.get(id=1)
 
         steps = list(
@@ -100,7 +103,16 @@ class Task3View(View):
     """
 
     def get(self, request, **kwargs):
-        recipes = list()
+        recipes = list(
+            Recipe.objects.annotate(
+                likes=Count('vote', filter=F('vote__is_like'))
+                ).values_list(
+                    'userrecipe__user',
+                    'title',
+                    'description',
+                    'likes'
+                ).order_by('-likes')
+        )
 
         # Если есть необходимость посмотреть на выполняемые запросы, план запросов через браузер, то нужно
         # раскомментировать строки ниже
