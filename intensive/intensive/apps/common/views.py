@@ -9,7 +9,8 @@ from django.shortcuts import (
 from django.views import (
     View,
 )
-
+from recipes.models import Recipe, CookStep, RecipeProduct
+ 
 
 class Task1View(View):
     """
@@ -20,7 +21,9 @@ class Task1View(View):
     """
 
     def get(self, request, **kwargs):
-        recipes = list()
+        recipes = list(
+            Recipe.objects.values_list('userrecipe__user', 'title', 'description')
+        )
 
         # Если есть необходимость посмотреть на выполняемые запросы, план запросов через браузер, то нужно
         # раскомментировать строку ниже
@@ -47,8 +50,16 @@ class Task2View(View):
     """
 
     def get(self, request, **kwargs):
-        steps = list()
-        products = list()
+        recipe = Recipe.objects.get(id=1)
+        steps = list(
+            CookStep.objects.values_list('title', 'description'
+            ).filter(recipe=recipe)
+        )
+        products = list(
+            RecipeProduct.objects.values_list(
+                'product__title', 'product__description', 'count', 'unit__abbreviation'
+            ).filter(recipe=recipe)
+        )
 
         recipe_data = {
             'steps': steps,
