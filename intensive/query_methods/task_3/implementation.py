@@ -1,4 +1,4 @@
-from query_methods.models import OrderItem, ProductCost, ProductCount
+from query_methods.models import Order, OrderItem, ProductCost, ProductCount
 
 
 def get_top_order_by_sum_in_period(begin, end):
@@ -12,40 +12,10 @@ def get_top_order_by_sum_in_period(begin, end):
     Returns: возвращает номер заказа и его сумму
     """
 
+    order = Order.objects.filter(date_formation__range=[begin, end])
+    __import__('pdb').set_trace()
     goods = OrderItem.objects.filter(
-        order__date_formation__range=[begin, end]
+        
     )
-
-    product = {}
-    for item in goods:
-        """ Формируем кол-во товара в наличии, только за текущий период """
-        remaining_items_in_stock = ProductCount.objects.filter(
-            begin__lte=item.order.date_formation,
-            end__gte=item.order.date_formation,
-            product__name=item.product.name).first()
-
-        if remaining_items_in_stock:
-            if remaining_items_in_stock.value < item.count:
-                final_count_of_items = remaining_items_in_stock.value
-            else:
-                final_count_of_items = item.count
-        """ Формируем цену cost, только если попадаем в период активной цены """
-        cost = ProductCost.objects.filter(
-            begin__lte=item.order.date_formation,
-            end__gte=item.order.date_formation,
-            product__name=item.product.name).first()
-
-        if cost:
-            if product.get(item.order.number):
-                amount = product[item.order.number] + cost.value * final_count_of_items
-                product[item.order.number] = amount
-            else:
-                product[item.order.number] = cost.value * final_count_of_items
-
-    if product:
-        product_max = max(product, key=product.get)
-        result = (product_max, product[product_max])
-    else:
-        result = None
 
     return result
