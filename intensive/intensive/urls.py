@@ -15,9 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+
 from day_10 import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('calc/', views.calc, name='calc'),
+    path('query/', views.query, name='query'),
 ]
