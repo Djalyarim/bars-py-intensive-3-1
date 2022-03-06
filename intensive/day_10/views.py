@@ -29,9 +29,11 @@ def calc(request):
 
             response = JsonResponse(data, safe=False)
         else:
-            response = HttpResponse('Отсутствует параметр "maths"')
+            error_message = 'Отсутствует параметр "maths"'
+            response = HttpResponse(status=400, content=error_message)
     else:
-        response = HttpResponse('Необходим запрос "GET"')
+        error_message = 'Необходим запрос "GET"'
+        response = HttpResponse(status=400, content=error_message)
 
     return response
 
