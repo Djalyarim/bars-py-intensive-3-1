@@ -18,19 +18,20 @@ def calc(request):
 
     Результат:  JsonResponse вида {'3*3': 9, '10-2': 8, '10/5': 2}
     """
-    if not request.method == 'GET':
-        print('Необходим запрос "GET"')
-    if 'maths' not in request.GET:
-        print('Отсутствует параметр "maths"')
+    if request.method == 'GET':
+        if 'maths' in request.GET:
+            data = {}
+            splitter = request.GET.get('delimiter', ',')
+            set_of_expressions = request.GET['maths'].split(splitter)
 
-    data = {}
-    splitter = request.GET.get('delimiter', ',')
-    set_of_expressions = request.GET['maths'].split(splitter)
+            for value in set_of_expressions:
+                data[value] = eval(value)
 
-    for value in set_of_expressions:
-        data[value] = eval(value)
-
-    response = JsonResponse(data, safe=False)
+            response = JsonResponse(data, safe=False)
+        else:
+            response = HttpResponse('Отсутствует параметр "maths"')
+    else:
+        response = HttpResponse('Необходим запрос "GET"')
 
     return response
 
