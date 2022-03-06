@@ -44,7 +44,7 @@ def query(request):
         ).annotate(
             cnt=Count('order'),
             order_before=Min('order__date_formation')
-        ).values(
+        ).values_list(
             'name', 'cnt'
         ).order_by(
             '-cnt', 'order_before', 'name'
@@ -54,7 +54,7 @@ def query(request):
     item = list(
         OrderItem.objects.filter(
             order__date_formation__range=[date(2021, 2, 1), date(2021, 3, 15)]
-        ).values(
+        ).values_list(
             'product__name'
         ).annotate(
             amount=Sum('count')
@@ -63,6 +63,11 @@ def query(request):
         ).first()
     )
 
-    response = HttpResponse(content=json.dumps(dict(query=query, item=item)))
+    response = HttpResponse(
+        content=json.dumps(dict(query=query, item=item),
+                           ensure_ascii=False,
+                           default=str
+                           )
+    )
 
     return response
