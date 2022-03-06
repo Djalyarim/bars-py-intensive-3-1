@@ -8,7 +8,6 @@ class Product(models.Model):
     name = models.CharField('Наименование', max_length=300)
 
     def __str__(self):
-
         return self.name
 
     class Meta:
@@ -37,10 +36,6 @@ class ProductCost(models.Model):
     end = models.DateField('Окончание периода')
     value = models.DecimalField('Значение', max_digits=6, decimal_places=2)
 
-    def __str__(self):
-
-        return f'{self.product}'
-
     class Meta:
         db_table = 'product_cost'
 
@@ -50,6 +45,9 @@ class Customer(models.Model):
     Покупатель
     """
     name = models.CharField('Покупатель', max_length=300)
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         db_table = 'customer'
@@ -62,6 +60,9 @@ class Order(models.Model):
     number = models.CharField('Номер', max_length=50)
     date_formation = models.DateField('Дата')
     customer = models.ForeignKey('Customer', on_delete=models.CASCADE, verbose_name='Покупатель')
+
+    def __str__(self):
+        return self.number
 
     class Meta:
         db_table = 'order'

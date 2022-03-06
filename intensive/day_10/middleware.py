@@ -12,6 +12,7 @@ class StatisticMiddleware:
     Компонент вычисляющий время выполнения запроса на сервере и размер ответа в байтах.
     Отображает значения в консоли приложения
     """
+
     def __init__(self, get_response):
         self.get_response = get_response
 
@@ -29,6 +30,7 @@ class FormatterMiddleware:
     Компонент форматирующий Json ответ в HttpResponse
     {'key': value} => <p>key = value</p>
     """
+
     def __init__(self, get_response):
         self.get_response = get_response
 
@@ -37,6 +39,7 @@ class FormatterMiddleware:
         if isinstance(response, JsonResponse):
             data = ''
             parsed = json.loads(response.content)
+
             for key, value in parsed.items():
                 data += f'<p>{key} = {value}</p>'
             response.content = data
@@ -51,9 +54,11 @@ class CheckErrorMiddleware(MiddlewareMixin):
     """
 
     def process_exception(self, request, exception):
-        data = f'Ошибка: {exception.args}'
 
-        return HttpResponse(data)
+        error_message = f'Ошибка: {exception.args[0]}'
+        response = HttpResponse(status=400, content=error_message)
+
+        return response
 
 
 class CheckQueriesMiddleware:
@@ -61,6 +66,7 @@ class CheckQueriesMiddleware:
     Выводит в консоль веб приложения все sql запросы к БД выполненные во время http-запроса.
     Отображает значения в консоли приложения.
     """
+
     def __init__(self, get_response):
         self.get_response = get_response
 

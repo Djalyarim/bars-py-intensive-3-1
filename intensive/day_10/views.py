@@ -1,6 +1,10 @@
+import json
+from datetime import date
+
+from django.db.models import Count, Min, Sum
 from django.http import HttpResponse, JsonResponse
 
-from day_10.models import ProductCost, ProductCount
+from day_10.models import Customer, OrderItem
 
 
 def calc(request):
@@ -33,7 +37,32 @@ def calc(request):
 
 def query(request):
     """ Делаем несколько запросов к БД """
-    sausage_cost = ProductCost.objects.all().values_list()
-    ProductCount.objects.all().values().count()
 
-    return HttpResponse(sausage_cost)
+    query = list(
+        Customer.objects.filter(
+            order__date_formation__range=[date(2021, 1, 1), date(2021, 3, 31)]
+        ).annotate(
+            cnt=Count('order'),
+            order_before=Min('order__date_formation')
+        ).values(
+            'name', 'cnt'
+        ).order_by(
+            '-cnt', 'order_before', 'name'
+        ).first()
+    )
+
+    item = list(
+        OrderItem.objects.filter(
+            order__date_formation__range=[date(2021, 2, 1), date(2021, 3, 15)]
+        ).values(
+            'product__name'
+        ).annotate(
+            amount=Sum('count')
+        ).order_by(
+            '-amount'
+        ).first()
+    )
+
+    response = HttpResponse(content=json.dumps(dict(query=query, item=item)))
+
+    return response
