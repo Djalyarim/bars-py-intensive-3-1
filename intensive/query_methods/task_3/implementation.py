@@ -1,4 +1,6 @@
+from unittest import result
 from query_methods.models import Order, OrderItem, ProductCost, ProductCount
+from django.db.models import Count, Sum, F
 
 
 def get_top_order_by_sum_in_period(begin, end):
@@ -12,10 +14,23 @@ def get_top_order_by_sum_in_period(begin, end):
     Returns: возвращает номер заказа и его сумму
     """
 
-    order = Order.objects.filter(date_formation__range=[begin, end])
-    __import__('pdb').set_trace()
-    goods = OrderItem.objects.filter(
-        
-    )
+    order_with_max_cost = OrderItem.objects.filter(
+        order__date_formation__range=(
+            begin,
+            end
+        )
+    ).filter(
+        order__date_formation__range=(
+            F('product__productcost__begin'),
+            F('product__productcost__end')
+        )
+    ).values_list(
+        'order__number'
+    ).annotate(
+        cost=Sum(F('count') * F('product__productcost__value'))
+    ).order_by(
+        '-cost',
+        'order__number'
+    ).first()
 
-    return result
+    return order_with_max_cost
