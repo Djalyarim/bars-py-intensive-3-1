@@ -20,7 +20,7 @@ class StatisticMiddleware:
         start_time = time.perf_counter()
         response = self.get_response(request)
         print(f'Время вычисления запроса {request} - {time.perf_counter() - start_time} секунд')
-        print(f'Размер ответа - {sys.getsizeof(response.content)} байт', '\n')
+        print(f'Размер ответа - {sys.getsizeof(response.content)} байт')
 
         return HttpResponse(response)
 

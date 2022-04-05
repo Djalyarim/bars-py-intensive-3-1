@@ -44,14 +44,14 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'day_10.middleware.CheckQueriesMiddleware',
-    'day_10.middleware.StatisticMiddleware',
-    'day_10.middleware.FormatterMiddleware',
-    'day_10.middleware.CheckErrorMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'day_10.middleware.CheckQueriesMiddleware',
+    'day_10.middleware.StatisticMiddleware',
+    'day_10.middleware.FormatterMiddleware',
+    'day_10.middleware.CheckErrorMiddleware',
 ]
 
 ROOT_URLCONF = 'intensive.urls'
