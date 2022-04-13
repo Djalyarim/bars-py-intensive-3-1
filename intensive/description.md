@@ -26,3 +26,15 @@ Q) Вторая транзакция в состоянии Sharelock и буде
 pid   usename      blocked_by             blocked_query
 342   intensive    {331}                  UPDATE workers SET name = '"Коля"';
 </pre>
+<pre>
+   locktype    | relation |     mode      | tid | vtid  | pid | granted 
+---------------+----------+---------------+-----+-------+-----+---------
+ transactionid |          | ExclusiveLock | 521 | 7/219 | 331 | t
+ virtualxid    |          | ExclusiveLock |     | 7/219 | 331 | t
+ transactionid |          | ExclusiveLock | 522 | 8/10  | 342 | t
+ transactionid |          | ShareLock     | 521 | 8/10  | 342 | f
+ virtualxid    |          | ExclusiveLock |     | 8/10  | 342 | t
+ virtualxid    |          | ExclusiveLock |     | 9/212 | 454 | t
+ transactionid |          | ExclusiveLock | 523 | 9/212 | 454 | t
+(7 rows)
+</pre>
