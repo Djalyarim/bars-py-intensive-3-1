@@ -22,4 +22,7 @@ Q) ROLLBACK откатывает текущую транзакцию и прив
 1) В двух транзакциях добиться блокировки строки при попытке обновления одной и той же записи.
 И с помощью представления pg_lock получить информацию о получившейся блокировке. <br>
 Q) Вторая транзакция в состоянии Sharelock и будет там висеть пока первая транзакция не применит комит (снимет ExlusiveLock) <br>
-pid   usename   blocked_by             blocked_query  <br> 342  intensive  {331}  UPDATE workers SET name = '"Коля"';
+<pre>
+pid   usename      blocked_by             blocked_query
+342   intensive    {331}                  UPDATE workers SET name = '"Коля"';
+</pre>
