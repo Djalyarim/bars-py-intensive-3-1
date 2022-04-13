@@ -23,18 +23,18 @@ Q) ROLLBACK откатывает текущую транзакцию и прив
 И с помощью представления pg_lock получить информацию о получившейся блокировке. <br>
 Q) Вторая транзакция в состоянии Sharelock и будет там висеть пока первая транзакция не применит комит (снимет ExlusiveLock) <br>
 <pre>
-pid   usename      blocked_by             blocked_query
-342   intensive    {331}                  UPDATE workers SET name = '"Коля"';
+ pid |  usename  | blocked_by |            blocked_query            
+-----+-----------+------------+-------------------------------------
+  49 | intensive | {40}       | UPDATE workers SET name = '"Коля"';
+(1 row)
 </pre>
 <pre>
-   locktype    | relation |     mode      | tid | vtid  | pid | granted 
----------------+----------+---------------+-----+-------+-----+---------
- transactionid |          | ExclusiveLock | 521 | 7/219 | 331 | t
- virtualxid    |          | ExclusiveLock |     | 7/219 | 331 | t
- transactionid |          | ExclusiveLock | 522 | 8/10  | 342 | t
- transactionid |          | ShareLock     | 521 | 8/10  | 342 | f
- virtualxid    |          | ExclusiveLock |     | 8/10  | 342 | t
- virtualxid    |          | ExclusiveLock |     | 9/212 | 454 | t
- transactionid |          | ExclusiveLock | 523 | 9/212 | 454 | t
-(7 rows)
+   locktype    | relation |     mode      | tid | vtid | pid | granted 
+---------------+----------+---------------+-----+------+-----+---------
+ virtualxid    |          | ExclusiveLock |     | 4/3  |  40 | t
+ transactionid |          | ExclusiveLock | 528 | 4/3  |  40 | t
+ virtualxid    |          | ExclusiveLock |     | 5/4  |  49 | t
+ transactionid |          | ExclusiveLock | 529 | 5/4  |  49 | t
+ transactionid |          | ShareLock     | 528 | 5/4  |  49 | f
+(5 rows)
 </pre>
