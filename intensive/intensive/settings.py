@@ -74,6 +74,10 @@ WSGI_APPLICATION = 'intensive.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+DATABASE_ROUTERS = [
+    'day_19.routers.PrimaryReplicaRouter',
+]
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -82,6 +86,14 @@ DATABASES = {
         'PASSWORD': 'postgres',
         'HOST': '127.0.0.1',
         'PORT': '5432',
+    },
+    'replica': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': '127.0.0.1',
+        'PORT': '5555',
     }
 }
 

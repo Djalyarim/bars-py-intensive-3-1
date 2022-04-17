@@ -15,7 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from day_19.views import create_workers, main, replica, choose_db
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('create_workers/', create_workers, name='create'),
+    path('main_query/', main, name='main'),
+    path('replica_query/', replica, name='main'),
+    path('choose_db/', choose_db, name='choose_db')
 ]
